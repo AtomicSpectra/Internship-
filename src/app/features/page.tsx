@@ -83,34 +83,46 @@ export default function Features() {
     <div className="flex flex-col min-h-screen">
       <NavBar />
       <main className="flex-grow">
-        <div className="pt-12 bg-gray-50">
+        <div className="pt-12 bg-gradient-to-b from-white to-blue-50/40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 className="text-4xl font-bold text-center text-gray-900 mb-2">
-              Features
-            </h1>
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900">Features</h1>
+              <div className="mt-3 flex justify-center">
+                <span className="h-1 w-24 rounded-full bg-gradient-to-r from-blue-500 to-pink-500" />
+              </div>
+              <p className="mt-4 text-gray-600 max-w-2xl mx-auto">Tools designed to streamline your preparation and maximize results.</p>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
               {features.map((feature, index) => (
-                <div key={index} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="text-3xl">{feature.icon}</div>
-                    <div className="flex gap-2">
-                      {feature.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className={`text-xs px-2 py-1 rounded ${
-                            tag === 'Pro' ? 'bg-purple-100 text-purple-700' : 'bg-pink-100 text-pink-700'
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                <div key={index} className="group relative">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/10 via-pink-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative bg-white rounded-2xl p-6 border border-gray-100 shadow-sm group-hover:shadow-lg transition-all duration-300">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="text-3xl">{feature.icon}</div>
+                      <div className="flex gap-2">
+                        {feature.tags.map((tag, tagIndex) => (
+                          <span
+                            key={tagIndex}
+                            className={`text-xs px-2.5 py-1 rounded-full ${
+                              tag === 'Pro' ? 'bg-purple-100 text-purple-700' : 'bg-pink-100 text-pink-700'
+                            }`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="text-xs font-medium text-gray-500 mb-2 tracking-wide">{feature.type}</div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+
+                    <div className="mt-6 flex items-center text-blue-600 font-medium">
+                      <span className="mr-2">Learn more</span>
+                      <span className="transition-transform group-hover:translate-x-1">→</span>
                     </div>
                   </div>
-                  
-                  <div className="text-sm text-gray-500 mb-2">{feature.type}</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
                 </div>
               ))}
             </div>

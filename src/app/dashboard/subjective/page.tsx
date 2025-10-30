@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar'
 import Footer from '@/components/Footer'
 import { Upload, Link as LinkIcon, FileText, Image, PenTool, MessageSquare, ThumbsUp, AlertCircle } from 'lucide-react'
 import axios from 'axios'
+import { fetchLinkContent, uploadToFileIo, ocrSpaceByUrl, fetchWikipediaSummary } from '@/lib/external'
 import Markdown from 'react-markdown'
 
 type InputType = 'context' | 'topic' | 'link' | 'media' | 'pdf'
@@ -29,6 +30,7 @@ export default function SubjectivePage() {
   const [activeInput, setActiveInput] = useState<InputType>('context')
   const [fileUpload, setFileUpload] = useState<File | null>(null)
   const [linkUrl, setLinkUrl] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [showFeedback, setShowFeedback] = useState(false)
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([
     {
@@ -81,28 +83,48 @@ export default function SubjectivePage() {
   }
 
   // Simulate AI response generation (replace with actual API call)
-  const generateAIResponse = () => {
-    // Simulate an AI response based on the input text
-    const response = `AI Response: Here is a refined version of your text:\n\n${inputText
+  const generateAIResponseText = (text: string) => {
+    const refined = text
       .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')}.`;
-    setAiResponse(response);
+      .map((word) => (word ? word.charAt(0).toUpperCase() + word.slice(1) : word))
+      .join(' ')
+    const response = `AI Response: Here is a refined version of your text:\n\n${refined}.`
+    return response
+  }
 
-    // Simulate a descriptive response from your AI
-    const descriptiveResponse = `Descriptive Analysis:\n\nYour text demonstrates a strong command of language, but it could benefit from more varied sentence structures and a deeper exploration of the topic. Consider adding more examples or elaborating on key points to enhance clarity and engagement.`;
-    setAiDescriptiveResponse(descriptiveResponse);
-  };
+  const generateAIResponse = () => {
+    const response = generateAIResponseText(inputText)
+    setAiResponse(response)
+    const descriptiveResponse = `Descriptive Analysis:\n\nYour text demonstrates a strong command of language, but it could benefit from more varied sentence structures and a deeper exploration of the topic. Consider adding more examples or elaborating on key points to enhance clarity and engagement.`
+    setAiDescriptiveResponse(descriptiveResponse)
+  }
 
   const handleAIReview = async () => {
-    try {
-      if(!inputText) throw new Error("Please provide a query");
-      axios.defaults.baseURL = 'http://127.0.0.1:5000'
-      const {data} = await axios.post('/query', { query: inputText })
-      setAiResponse(data.result)
-    } catch (error) {
-      console.error('Error requesting AI review:', error)
+    const trimmed = inputText.trim()
+    if (!trimmed) {
+      setAiResponse('Please enter some text above, then click AI Review.')
+      return
     }
+
+    setIsLoading(true)
+    let newResponse: string | null = null
+    try {
+      // First try the built-in Next.js API route
+      const { data } = await axios.post('/api/query', { query: trimmed }, { timeout: 15000 })
+      if (data?.result && typeof data.result === 'string') {
+        newResponse = data.result
+      }
+    } catch (_) {
+      // ignore and fall back
+    }
+
+    if (!newResponse) {
+      newResponse = generateAIResponseText(trimmed)
+    }
+
+    setAiResponse(newResponse)
+    setShowFeedback(true)
+    setIsLoading(false)
   };
 
   const handleEditResponse = () => {
@@ -134,6 +156,49 @@ export default function SubjectivePage() {
 
   const renderInputSection = () => {
     switch (activeInput) {
+      case 'context':
+        return (
+          <div className="mb-4">
+            <textarea
+              className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+              placeholder="Provide background context for the prompt..."
+              value={inputText}
+              onChange={handleTextChange}
+              rows={5}
+            />
+          </div>
+        )
+      case 'topic':
+        return (
+          <div className="mb-4 space-y-3">
+            <input
+              type="text"
+              placeholder="Enter a topic (e.g., Climate change)"
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+            />
+            <div className="flex justify-end">
+              <button
+                onClick={async () => {
+                  if (!linkUrl) return
+                  try {
+                    setIsLoading(true)
+                    const summary = await fetchWikipediaSummary(linkUrl)
+                    setInputText(summary)
+                  } catch (e) {
+                    alert((e as Error).message)
+                  } finally {
+                    setIsLoading(false)
+                  }
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700"
+              >
+                Fetch topic summary
+              </button>
+            </div>
+          </div>
+        )
       case 'link':
         return (
           <div className="mb-4">
@@ -144,6 +209,25 @@ export default function SubjectivePage() {
               onChange={(e) => setLinkUrl(e.target.value)}
               className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
             />
+            <div className="flex justify-end mt-3">
+              <button
+                onClick={async () => {
+                  if (!linkUrl) return
+                  try {
+                    setIsLoading(true)
+                    const text = await fetchLinkContent(linkUrl)
+                    setInputText(text)
+                  } catch (e) {
+                    alert((e as Error).message)
+                  } finally {
+                    setIsLoading(false)
+                  }
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700"
+              >
+                Import from link
+              </button>
+            </div>
           </div>
         )
       case 'media':
@@ -164,6 +248,27 @@ export default function SubjectivePage() {
                 </span>
               </div>
             </label>
+            <div className="flex justify-end mt-3">
+              <button
+                disabled={!fileUpload || isLoading}
+                onClick={async () => {
+                  if (!fileUpload) return
+                  try {
+                    setIsLoading(true)
+                    const url = await uploadToFileIo(fileUpload)
+                    const text = await ocrSpaceByUrl(url)
+                    setInputText(text)
+                  } catch (e) {
+                    alert((e as Error).message)
+                  } finally {
+                    setIsLoading(false)
+                  }
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50"
+              >
+                Extract text
+              </button>
+            </div>
           </div>
         )
       default:
@@ -317,15 +422,16 @@ export default function SubjectivePage() {
 
                   <div className="flex space-x-4">
                     <button
+                      disabled={isLoading}
                       onClick={handleAIReview}
-                      className="relative group px-6 py-2.5 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25 transform hover:-translate-y-0.5"
+                      className="relative group px-6 py-2.5 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25 transform hover:-translate-y-0.5 disabled:opacity-60"
                     >
                       <div className="absolute inset-0 bg-white/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <span className="relative flex items-center space-x-2">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        <button onClick={handleAIReview}>AI Review</button>
+                        <span>{isLoading ? 'Generating…' : 'AI Review'}</span>
                       </span>
                     </button>
                     <button 

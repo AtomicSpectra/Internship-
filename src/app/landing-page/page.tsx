@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Navbar from '@/components/NavBar'
 import Footer from '@/components/Footer'
-import Testimonials from '@/components/Testimonials'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import Link from 'next/link'
 
@@ -163,65 +162,130 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/60 to-white">
+        {/* Decorative blobs */}
+        <div className="pointer-events-none absolute -top-16 -left-16 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-16 -right-16 h-72 w-72 rounded-full bg-pink-400/20 blur-3xl" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
+            className="relative z-10 text-center"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <span className="inline-flex items-center rounded-full bg-white/70 backdrop-blur px-3 py-1 text-sm text-blue-700 border border-blue-100">
+              🚀 Powered by Techoctanet Services Pvt. Ltd.
+            </span>
+            <h1 className="mt-4 text-5xl md:text-6xl font-bold text-gray-900 tracking-tight">
               Master Your Competitive Exams
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              AI-powered preparation platform designed specifically for Indian competitive exams
+            <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
+              AI-powered preparation platform designed for modern learners. Practice smarter with analytics, feedback, and study plans.
             </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <button 
+
+            {/* CTAs */}
+            <div className="mt-8 flex items-center justify-center gap-4">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={handleGetStarted}
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-700 transition-colors"
+                className="bg-blue-600 text-white px-6 md:px-8 py-3 rounded-lg text-base md:text-lg font-medium hover:bg-blue-700 transition-colors shadow-sm"
               >
                 Get Started
-              </button>
+              </motion.button>
+              <motion.a
+                href="/features"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-6 md:px-8 py-3 rounded-lg text-base md:text-lg font-medium border border-gray-200 bg-white text-gray-900 hover:bg-gray-50 transition-colors shadow-sm"
+              >
+                Explore Features
+              </motion.a>
+            </div>
+
+            {/* Trust indicators */}
+            <div className="mt-8 text-sm text-gray-500 flex flex-col items-center gap-3">
+              <div className="flex items-center gap-4">
+                <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-green-500" /> No credit card required</span>
+                <span className="hidden sm:inline text-gray-300">|</span>
+                <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-500" /> 14-day free trial</span>
+                <span className="hidden sm:inline text-gray-300">|</span>
+                <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-purple-500" /> Cancel anytime</span>
+              </div>
+            </div>
+
+            {/* Preview card */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mt-12 mx-auto max-w-5xl"
+            >
+              <div className="relative rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 opacity-90" />
+                <div className="pt-10 px-6 md:px-10 pb-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  <div className="text-left">
+                    <h3 className="text-2xl font-semibold text-gray-900">Personalized Dashboard</h3>
+                    <p className="mt-2 text-gray-600">Track progress, identify weak areas, and stay on top with smart insights.</p>
+                    <ul className="mt-4 space-y-2 text-sm text-gray-600">
+                      <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Real-time analytics</li>
+                      <li className="flex items-center gap-2"><span className="text-green-600">✓</span> AI feedback on answers</li>
+                      <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Adaptive study plans</li>
+                    </ul>
+                  </div>
+                  <div className="h-56 md:h-64 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 border border-dashed border-gray-200 flex items-center justify-center text-gray-400">
+                    <span className="text-sm">Preview area</span>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature) => (
-            <div key={feature.id}>
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Features</h2>
+            <div className="mt-3 flex justify-center">
+              <span className="h-1 w-24 rounded-full bg-gradient-to-r from-blue-500 to-pink-500" />
+            </div>
+            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">Tools designed to streamline your preparation and maximize results.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature) => (
               <motion.div
-                className={`relative rounded-xl p-6 cursor-pointer ${
-                  hoveredFeature === feature.id ? 'shadow-lg' : 'shadow-sm'
-                } bg-white transition-all duration-300`}
+                key={feature.id}
+                whileHover={{ y: -6, scale: 1.01 }}
+                className="group relative"
                 onMouseEnter={() => setHoveredFeature(feature.id)}
                 onMouseLeave={() => setHoveredFeature(null)}
-                whileHover={{ y: -5 }}
               >
-                <div className={`w-12 h-12 ${feature.color} rounded-lg flex items-center justify-center text-2xl mb-4`}>
-                  {feature.icon}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/10 via-pink-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative rounded-2xl bg-white border border-gray-100 shadow-sm group-hover:shadow-lg transition-all duration-300 p-6">
+                  <div className="flex items-center justify-between">
+                    <div className={`w-12 h-12 ${feature.color} rounded-xl flex items-center justify-center text-2xl shadow-sm`}>{feature.icon}</div>
+                    <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${hoveredFeature === feature.id ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600'}`}>New</span>
+                  </div>
+                  <h3 className="mt-5 text-xl font-semibold text-gray-900">{feature.title}</h3>
+                  <p className="mt-2 text-gray-600 leading-relaxed">{feature.description}</p>
+                  <div className="mt-6 flex items-center text-blue-600 font-medium">
+                    <span className="mr-2">Learn more</span>
+                    <motion.span
+                      animate={{
+                        x: hoveredFeature === feature.id ? 4 : 0,
+                        opacity: hoveredFeature === feature.id ? 1 : 0.6
+                      }}
+                    >
+                      →
+                    </motion.span>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-                <motion.div
-                  className="absolute bottom-4 right-4"
-                  animate={{
-                    x: hoveredFeature === feature.id ? 0 : 10,
-                    opacity: hoveredFeature === feature.id ? 1 : 0
-                  }}
-                >
-                  →
-                </motion.div>
               </motion.div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -259,7 +323,32 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <Testimonials/>
+      {/* Development Team Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50/40">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative rounded-2xl bg-white/80 backdrop-blur border border-blue-100 shadow-lg p-8 md:p-12">
+            <div className="absolute -top-4 left-6 h-8 w-8 rounded-full bg-gradient-to-tr from-blue-500 to-pink-500 shadow-md" />
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center">
+              Development Team
+            </h2>
+            <div className="mt-3 flex justify-center">
+              <span className="h-1 w-24 rounded-full bg-gradient-to-r from-blue-500 to-pink-500" />
+            </div>
+            <div className="mt-8">
+              <p className="text-lg md:text-xl leading-8 text-gray-700 max-w-4xl mx-auto text-center">
+                The development team at <span className="font-semibold text-gray-900">Techoctanet Services Pvt. Ltd.</span> comprised a group of
+                skilled and collaborative professionals dedicated to building efficient and scalable web solutions. The team
+                included frontend developers, backend engineers, UI/UX designers, and project coordinators who worked closely
+                to ensure seamless integration between design and functionality. Regular discussions, code reviews, and sprint
+                meetings fostered an agile workflow, enabling quick problem-solving and continuous improvement. Each member
+                contributed unique technical expertise, from optimizing database performance to refining user interfaces,
+                resulting in a cohesive and well-structured product development process focused on innovation and user
+                satisfaction.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* Pricing Section */}
       <main className="flex-grow">
@@ -280,7 +369,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-semibold text-gray-900">Free</h3>
                 <p className="mt-4 text-gray-600">Perfect to get started</p>
                 <p className="mt-8">
-                  <span className="text-4xl font-extrabold text-gray-900">$0</span>
+                  <span className="text-4xl font-extrabold text-gray-900">₹0</span>
                   <span className="text-base font-medium text-gray-500">/month</span>
                 </p>
                 <ul className="mt-8 space-y-4">
@@ -310,7 +399,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-semibold text-gray-900">Pro</h3>
                 <p className="mt-4 text-gray-600">For serious learners</p>
                 <p className="mt-8">
-                  <span className="text-4xl font-extrabold text-gray-900">$29</span>
+                  <span className="text-4xl font-extrabold text-gray-900">₹109</span>
                   <span className="text-base font-medium text-gray-500">/month</span>
                 </p>
                 <ul className="mt-8 space-y-4">
@@ -346,7 +435,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-semibold text-gray-900">Enterprise</h3>
                 <p className="mt-4 text-gray-600">For teams and organizations</p>
                 <p className="mt-8">
-                  <span className="text-4xl font-extrabold text-gray-900">$99</span>
+                  <span className="text-4xl font-extrabold text-gray-900">₹259</span>
                   <span className="text-base font-medium text-gray-500">/month</span>
                 </p>
                 <ul className="mt-8 space-y-4">
@@ -390,7 +479,7 @@ export default function LandingPage() {
                 About Us
                 <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1.5 bg-pink-500 rounded-full"></div>
               </h1>
-              <h2 className="text-3xl font-semibold text-gray-800 mt-12 mb-6">Logic Lassan</h2>
+              <h2 className="text-3xl font-semibold text-gray-800 mt-12 mb-6">Techoctanet Services Pvt. Ltd.</h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 We are a team of passionate developers working together to create innovative solutions that help students
                 achieve their academic goals and prepare for competitive exams.
@@ -409,7 +498,7 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <MemberGrid members={teamMembers} title="Development Team" />
+            {/* Development team grid removed in favor of descriptive paragraph */}
           </div>
         </div>
       </div>

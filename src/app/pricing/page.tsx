@@ -29,7 +29,7 @@ export default function Pricing() {
                 <h3 className="text-2xl font-semibold text-gray-900">Free</h3>
                 <p className="mt-4 text-gray-600">Perfect to get started</p>
                 <p className="mt-8">
-                  <span className="text-4xl font-extrabold text-gray-900">$0</span>
+                  <span className="text-4xl font-extrabold text-gray-900">₹0</span>
                   <span className="text-base font-medium text-gray-500">/month</span>
                 </p>
                 <ul className="mt-8 space-y-4">
@@ -59,7 +59,7 @@ export default function Pricing() {
                 <h3 className="text-2xl font-semibold text-gray-900">Pro</h3>
                 <p className="mt-4 text-gray-600">For serious learners</p>
                 <p className="mt-8">
-                  <span className="text-4xl font-extrabold text-gray-900">$29</span>
+                  <span className="text-4xl font-extrabold text-gray-900">₹109</span>
                   <span className="text-base font-medium text-gray-500">/month</span>
                 </p>
                 <ul className="mt-8 space-y-4">
@@ -95,7 +95,7 @@ export default function Pricing() {
                 <h3 className="text-2xl font-semibold text-gray-900">Enterprise</h3>
                 <p className="mt-4 text-gray-600">For teams and organizations</p>
                 <p className="mt-8">
-                  <span className="text-4xl font-extrabold text-gray-900">$99</span>
+                  <span className="text-4xl font-extrabold text-gray-900">₹259</span>
                   <span className="text-base font-medium text-gray-500">/month</span>
                 </p>
                 <ul className="mt-8 space-y-4">

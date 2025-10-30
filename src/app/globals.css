@@ -60,12 +60,12 @@ body {
     --destructive-foreground: rgba(240 ,248 ,255 ,.9);/* Almost White with transparency*/
     --border: rgba(50 ,50 ,50 ,.5);                  /* Semi-transparent Darker Gray */
     --input: rgba(50 ,50 ,50 ,.5);                   /* Semi-transparent Darker Gray*/
-    --ring: rgba(135, 206, 250,.5 );                  /* Semi-transparent Sky Blue*/
-   --chart-1: rgba (135, 206, 250, .9);                 
-   --chart-2: rgba (0, 191, 255, .9 );                 
-   --chart-3 :rgba (30, 144, 255,.9 );                
-   --chart-4 :rgba (100, 149, 237,.9 );                 
-   --chart-5 :rgba (70, 130, 180,.9 );                
+    --ring: rgba(135, 206, 250, .5);                  /* Semi-transparent Sky Blue*/
+    --chart-1: rgba(135, 206, 250, .9);
+    --chart-2: rgba(0, 191, 255, .9);
+    --chart-3: rgba(30, 144, 255, .9);
+    --chart-4: rgba(100, 149, 237, .9);
+    --chart-5: rgba(70, 130, 180, .9);
 }
 
 }

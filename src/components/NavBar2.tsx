@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { UserButton } from '@clerk/nextjs'
+// Clerk removed
 
 export default function NavBar2() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -28,8 +28,11 @@ export default function NavBar2() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/dashboard" className="text-xl font-bold text-blue-600">
-              PrepMitra
+            <Link href="/" className="flex items-center gap-3 group">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-pink-500 text-white font-semibold shadow-sm group-hover:shadow transition-shadow">PM</span>
+              <span className="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 group-hover:from-blue-700 group-hover:to-pink-600 transition-colors">
+                PrepMitra
+              </span>
             </Link>
           </div>
 
@@ -108,7 +111,9 @@ export default function NavBar2() {
                 {item.name}
               </Link>
             ))}
-            <UserButton />
+            <Link href="/dashboard" className="text-gray-700 hover:text-blue-600">
+              Dashboard
+            </Link>
           </div>
         </div>
       </div>

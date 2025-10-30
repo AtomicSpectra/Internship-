@@ -1,19 +1,9 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
-import { auth } from '@clerk/nextjs/server'
+// Auth removed
 
 export default async function Home() {
-  const {userId, redirectToSignIn} = await auth()
-
-  if (!userId) return redirectToSignIn()
-
   return (
-    <>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-    </>
+    <div className="p-6">
+      <p className="text-sm text-gray-700">Welcome to Prep-Mitra.</p>
+    </div>
   )
 }
