@@ -4,6 +4,7 @@ import React from 'react';
 import Footer from '@/components/Footer';
 import NavBar2 from '@/components/NavBar2';
 
+export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <NavBar2 />
