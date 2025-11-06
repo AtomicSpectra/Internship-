@@ -5,8 +5,9 @@ export async function fetchLinkContent(url: string): Promise<string> {
     if (!resp.ok) throw new Error('Failed to fetch link content')
     const text = await resp.text()
     return text.trim()
-  } catch (e: any) {
-    throw new Error(e?.message || 'Unable to fetch link content')
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Unable to fetch link content'
+    throw new Error(message)
   }
 }
 

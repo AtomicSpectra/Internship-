@@ -73,7 +73,7 @@ export default function Sidebar({ activeItem, setActiveItem }: {
     if (currentItem) {
       setActiveItem(currentItem.id)
     }
-  }, [pathname, setActiveItem])
+  }, [pathname, setActiveItem, sidebarItems])
 
   if (!isClient) {
     return <div className="w-64 bg-white h-[calc(100vh-5rem)] fixed left-0 shadow-lg" />

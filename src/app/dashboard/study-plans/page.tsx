@@ -10,13 +10,10 @@ import Box1 from '@/components/Box1'
 import Box2 from '@/components/Box2'
 import { 
   BookOpen,
-  PenTool,
-  Languages,
   GraduationCap,
   Trophy,
   BarChart,
   BookText,
-  LucideLanguages
 } from 'lucide-react'
 
 export default function StudyPlans() {

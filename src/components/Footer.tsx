@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function Footer() {
@@ -10,44 +9,7 @@ export default function Footer() {
     setCurrentYear(new Date().getFullYear().toString())
   }, [])
 
-  const footerSections = {
-    features: {
-      title: 'Features',
-      links: [
-        { name: 'Smart Dashboard', href: '/dashboard' },
-        { name: 'Study Material', href: '/study' },
-        { name: 'Practice Tests', href: '/practice' },
-        { name: 'Community', href: '/community' },
-      ],
-    },
-    company: {
-      title: 'Company',
-      links: [
-        { name: 'About Us', href: '/about' },
-        { name: 'Careers', href: '/careers' },
-        { name: 'Blog', href: '/blog' },
-        { name: 'Contact', href: '/contact' },
-      ],
-    },
-    resources: {
-      title: 'Resources',
-      links: [
-        { name: 'Help Center', href: '/help' },
-        { name: 'Terms of Service', href: '/terms' },
-        { name: 'Privacy Policy', href: '/privacy' },
-        { name: 'FAQ', href: '/faq' },
-      ],
-    },
-    social: {
-      title: 'Connect',
-      links: [
-        { name: 'Twitter', href: 'https://twitter.com/prepmaster' },
-        { name: 'LinkedIn', href: 'https://linkedin.com/company/prepmaster' },
-        { name: 'Facebook', href: 'https://facebook.com/prepmaster' },
-        { name: 'Instagram', href: 'https://instagram.com/prepmaster' },
-      ],
-    },
-  }
+  // Sections config not used currently; keeping simple static links below
 
   return (
     <footer className="bg-gray-800 text-white">

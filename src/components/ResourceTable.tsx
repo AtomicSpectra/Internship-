@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { BookOpen, Clock, Star, BarChart, Users, Calendar, Trophy, ExternalLink } from 'lucide-react'
+import { BookOpen, Clock, Star, Users, Calendar, Trophy, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 interface Resource {

@@ -83,7 +83,7 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <div className="text-center py-12 bg-white rounded-lg shadow">
-                  <p className="text-gray-600 mb-4">You haven't enrolled in any study plans yet.</p>
+                  <p className="text-gray-600 mb-4">You haven&apos;t enrolled in any study plans yet.</p>
                   <button 
                     onClick={() => router.push('/dashboard/study-plans')}
                     className="px-6 py-2 bg-pink-500 text-white rounded-lg text-sm hover:bg-pink-600 transition-colors"

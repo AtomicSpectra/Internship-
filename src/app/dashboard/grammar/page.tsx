@@ -5,7 +5,7 @@ import NavBar2 from '@/components/NavBar2'
 import Sidebar from '@/components/Sidebar'
 import Footer from '@/components/Footer'
 import ResourceTable from '@/components/ResourceTable'
-import { BookOpen, GraduationCap } from 'lucide-react'
+import { BookOpen } from 'lucide-react'
 
 const grammarResources = [
   {
