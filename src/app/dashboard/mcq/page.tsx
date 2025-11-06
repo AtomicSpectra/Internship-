@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import NavBar2 from '@/components/NavBar2'
 import Sidebar from '@/components/Sidebar'
 import Footer from '@/components/Footer'
-import CreateMCQ from '@/components/CreateMCQ'
 
 interface MCQTest {
   id: number;

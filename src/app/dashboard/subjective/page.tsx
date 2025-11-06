@@ -7,7 +7,6 @@ import Footer from '@/components/Footer'
 import { Upload, Link as LinkIcon, FileText, Image, PenTool, MessageSquare, ThumbsUp, AlertCircle } from 'lucide-react'
 import axios from 'axios'
 import { fetchLinkContent, uploadToFileIo, ocrSpaceByUrl, fetchWikipediaSummary } from '@/lib/external'
-import Markdown from 'react-markdown'
 
 type InputType = 'context' | 'topic' | 'link' | 'media' | 'pdf'
 
@@ -32,7 +31,7 @@ export default function SubjectivePage() {
   const [linkUrl, setLinkUrl] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [showFeedback, setShowFeedback] = useState(false)
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([
+  const [feedbacks] = useState<Feedback[]>([
     {
       type: 'suggestion',
       message: 'Consider using more formal language in this academic context.'
@@ -47,7 +46,6 @@ export default function SubjectivePage() {
     }
   ])
   const [aiResponse, setAiResponse] = useState('') // State for AI-generated response
-  const [aiDescriptiveResponse, setAiDescriptiveResponse] = useState('') // State for AI-generated descriptive response
   const [writingStyle, setWritingStyle] = useState('academic') // State for selected writing style
 
   const inputOptions: InputOption[] = [
@@ -95,8 +93,6 @@ export default function SubjectivePage() {
   const generateAIResponse = () => {
     const response = generateAIResponseText(inputText)
     setAiResponse(response)
-    const descriptiveResponse = `Descriptive Analysis:\n\nYour text demonstrates a strong command of language, but it could benefit from more varied sentence structures and a deeper exploration of the topic. Consider adding more examples or elaborating on key points to enhance clarity and engagement.`
-    setAiDescriptiveResponse(descriptiveResponse)
   }
 
   const handleAIReview = async () => {
@@ -114,7 +110,7 @@ export default function SubjectivePage() {
       if (data?.result && typeof data.result === 'string') {
         newResponse = data.result
       }
-    } catch (_) {
+    } catch {
       // ignore and fall back
     }
 
